@@ -81,6 +81,7 @@
     input[type="text"], 
     input[type="password"], 
     input[type="file"], 
+    input[type="date"],
     select {
         width: 100%;
         padding: 12px;
@@ -89,16 +90,33 @@
         border-radius: 6px;
         box-sizing: border-box;
         font-size: 14px;
+        font-family: inherit;
         transition: border-color 0.3s, box-shadow 0.3s;
     }
 
-    /* Form sebaris untuk halaman planning */
-    .inline-form input, 
-    .inline-form select {
+    /* Form sebaris untuk filter */
+    .filter-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        background: #f8fafd;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e2eaf3;
+    }
+
+    .filter-container > div {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .filter-container input, 
+    .filter-container select {
+        margin-bottom: 0;
         width: auto;
-        display: inline-block;
-        margin-right: 15px;
-        margin-bottom: 10px;
     }
 
     input:focus, select:focus {
@@ -176,7 +194,7 @@
         border-collapse: separate;
         border-spacing: 0;
         width: 100%;
-        margin-top: 20px;
+        margin-top: 10px;
         margin-bottom: 20px;
         border-radius: 8px;
         overflow: hidden;
@@ -185,9 +203,10 @@
     }
 
     th, td {
-        padding: 15px;
+        padding: 12px 15px;
         text-align: left;
         border-bottom: 1px solid #eee;
+        font-size: 14px;
     }
 
     th {
@@ -210,6 +229,14 @@
 
     td:last-child, th:last-child {
         border-right: none;
+    }
+
+    /* Row Kosong */
+    .empty-row td {
+        text-align: center;
+        font-weight: bold;
+        color: #888;
+        padding: 20px;
     }
 
     .hidden {
@@ -252,57 +279,93 @@
     <!-- PLANNING -->
     <div id="planning">
         <h2>Planning Produksi AHM</h2>
-        <br>
-        <div class="inline-form">
-            <label style="display:inline;">Tanggal Awal:</label>
-            <input id="startDate" type="text" value="01/09/2026">
-            
-            <label style="display:inline;">Tanggal Akhir:</label>
-            <input id="endDate" type="text" value="07/10/2026">
-            
-            <label style="display:inline;">Plant:</label>
-            <select id="plant">
-                <option>Plant 4</option>
-                <option>Plant 5</option>
-                <option>Plant 6</option>
-            </select>
-            
-            <button id="btnSearch">SEARCH</button>
+        
+        <!-- Filter Area -->
+        <div class="filter-container">
+            <div>
+                <label>Tanggal Awal:</label>
+                <!-- type="date" untuk memunculkan kalender -->
+                <input id="startDate" type="date" value="2026-09-01">
+            </div>
+            <div>
+                <label>Tanggal Akhir:</label>
+                <input id="endDate" type="date" value="2026-10-31">
+            </div>
+            <div>
+                <label>Plant:</label>
+                <select id="plantFilter">
+                    <option value="Semua">Semua Plant</option>
+                    <option value="4">Plant 4</option>
+                    <option value="5">Plant 5</option>
+                    <option value="6">Plant 6</option>
+                </select>
+            </div>
+            <button id="btnSearch" onclick="filterTable()">SEARCH</button>
         </div>
 
         <table id="planningTable">
-            <tr>
-                <th>Delivery Note</th>
-                <th>Tanggal</th>
-                <th>Plant</th>
-                <th>Supplier</th>
-                <th>Part</th>
-                <th>Qty</th>
-            </tr>
-            <tr>
-                <td>DN001</td>
-                <td>01/09/26</td>
-                <td>4</td>
-                <td>Supplier A</td>
-                <td>Brake Pad</td>
-                <td>100</td>
-            </tr>
-            <tr>
-                <td>DN002</td>
-                <td>05/09/26</td>
-                <td>5</td>
-                <td>Supplier B</td>
-                <td>Oil Filter</td>
-                <td>80</td>
-            </tr>
-            <tr>
-                <td>DN003</td>
-                <td>10/09/26</td>
-                <td>6</td>
-                <td>Supplier C</td>
-                <td>Shock Absorber</td>
-                <td>60</td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Delivery Note</th>
+                    <th>Tanggal</th>
+                    <th>Plant</th>
+                    <th>Supplier</th>
+                    <th>Part</th>
+                    <th>Qty</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- data-date digunakan agar program mudah membaca tanggal saat memfilter -->
+                <tr data-date="2026-09-01" data-plant="4">
+                    <td>DN001</td><td>01/09/2026</td><td>4</td><td>Supplier A</td><td>Brake Pad</td><td>100</td>
+                </tr>
+                <tr data-date="2026-09-05" data-plant="5">
+                    <td>DN002</td><td>05/09/2026</td><td>5</td><td>Supplier B</td><td>Oil Filter</td><td>80</td>
+                </tr>
+                <tr data-date="2026-09-10" data-plant="6">
+                    <td>DN003</td><td>10/09/2026</td><td>6</td><td>Supplier C</td><td>Shock Absorber</td><td>60</td>
+                </tr>
+                <tr data-date="2026-09-12" data-plant="4">
+                    <td>DN004</td><td>12/09/2026</td><td>4</td><td>Supplier D</td><td>Spark Plug</td><td>200</td>
+                </tr>
+                <tr data-date="2026-09-15" data-plant="5">
+                    <td>DN005</td><td>15/09/2026</td><td>5</td><td>Supplier A</td><td>Brake Pad</td><td>150</td>
+                </tr>
+                <tr data-date="2026-09-18" data-plant="6">
+                    <td>DN006</td><td>18/09/2026</td><td>6</td><td>Supplier E</td><td>V-Belt</td><td>50</td>
+                </tr>
+                <tr data-date="2026-09-20" data-plant="4">
+                    <td>DN007</td><td>20/09/2026</td><td>4</td><td>Supplier F</td><td>Battery</td><td>30</td>
+                </tr>
+                <tr data-date="2026-09-25" data-plant="5">
+                    <td>DN008</td><td>25/09/2026</td><td>5</td><td>Supplier C</td><td>Shock Absorber</td><td>90</td>
+                </tr>
+                <tr data-date="2026-09-28" data-plant="6">
+                    <td>DN009</td><td>28/09/2026</td><td>6</td><td>Supplier B</td><td>Oil Filter</td><td>120</td>
+                </tr>
+                <tr data-date="2026-10-02" data-plant="4">
+                    <td>DN010</td><td>02/10/2026</td><td>4</td><td>Supplier D</td><td>Spark Plug</td><td>180</td>
+                </tr>
+                <tr data-date="2026-10-05" data-plant="5">
+                    <td>DN011</td><td>05/10/2026</td><td>5</td><td>Supplier A</td><td>Brake Pad</td><td>110</td>
+                </tr>
+                <tr data-date="2026-10-08" data-plant="6">
+                    <td>DN012</td><td>08/10/2026</td><td>6</td><td>Supplier E</td><td>V-Belt</td><td>65</td>
+                </tr>
+                <tr data-date="2026-10-12" data-plant="4">
+                    <td>DN013</td><td>12/10/2026</td><td>4</td><td>Supplier F</td><td>Battery</td><td>40</td>
+                </tr>
+                <tr data-date="2026-10-15" data-plant="5">
+                    <td>DN014</td><td>15/10/2026</td><td>5</td><td>Supplier B</td><td>Oil Filter</td><td>85</td>
+                </tr>
+                <tr data-date="2026-10-20" data-plant="6">
+                    <td>DN015</td><td>20/10/2026</td><td>6</td><td>Supplier C</td><td>Shock Absorber</td><td>70</td>
+                </tr>
+                <!-- Pesan jika data tidak ditemukan (awalnya disembunyikan) -->
+                <tr id="noDataRow" class="hidden empty-row">
+                    <td colspan="6">⚠ Data tidak ditemukan untuk filter tersebut.</td>
+                </tr>
+            </tbody>
         </table>
         
         <button id="btnDownload" onclick="downloadCSV()">⬇ DOWNLOAD DATA CSV</button>
@@ -313,23 +376,27 @@
         <h2>Internal Selog Exacto</h2>
         <p style="color: #666;">Upload dokumen planning incoming dari sistem internal.</p>
         
-        <input id="uploadFile" type="file">
-        <button id="btnUpload" onclick="uploadData()">⬆ UPLOAD DATA</button>
+        <div class="filter-container">
+            <input id="uploadFile" type="file" style="margin-bottom:0;">
+            <button id="btnUpload" onclick="uploadData()">⬆ UPLOAD DATA</button>
+        </div>
         <p id="uploadMessage"></p>
     </div>
 
     <!-- MONITORING -->
     <div id="monitoring" class="hidden">
         <h2>Monitoring Online Delivery Portal</h2>
-        <br>
-        <div class="inline-form">
-            <label style="display:inline;">Status Delivery Note:</label>
-            <select id="deliveryStatus">
-                <option>Semua Status</option>
-                <option>Created</option>
-                <option>XML Out</option>
-                <option>Printed</option>
-            </select>
+        
+        <div class="filter-container">
+            <div>
+                <label>Status DN:</label>
+                <select id="deliveryStatus">
+                    <option>Semua Status</option>
+                    <option>Created</option>
+                    <option>XML Out</option>
+                    <option>Printed</option>
+                </select>
+            </div>
             <button id="btnMonitoringSearch">SEARCH</button>
         </div>
 
@@ -395,11 +462,10 @@
         var pass = document.getElementById("password").value;
         var msg = document.getElementById("message");
         
-        // Cek validasi username & password
         if (user === "admin" && pass === "admin123") {
             document.getElementById("loginPage").classList.add("hidden");
             document.getElementById("application").classList.remove("hidden");
-            msg.innerText = ""; // Bersihkan pesan error
+            msg.innerText = ""; 
         } else if (user === "" || pass === "") {
             msg.innerText = "⚠ Username dan Password tidak boleh kosong!";
             msg.style.color = "#e3000f";
@@ -409,40 +475,98 @@
         }
     }
 
-    // Fungsi Pindah Menu dengan Indikator Aktif
+    // Fungsi Pindah Menu
     function showPage(pageId, element) {
-        // Sembunyikan semua halaman
         document.getElementById("planning").classList.add("hidden");
         document.getElementById("upload").classList.add("hidden");
         document.getElementById("monitoring").classList.add("hidden");
         document.getElementById("actual").classList.add("hidden");
         
-        // Hapus class 'active' dari semua tombol menu
         var links = document.querySelectorAll(".menu a");
         links.forEach(function(link) {
             link.classList.remove("active");
         });
 
-        // Tampilkan halaman yang dipilih dan tambahkan class 'active' pada tombol yg diklik
         document.getElementById(pageId).classList.remove("hidden");
         element.classList.add("active");
     }
 
-    // Fungsi Download Tabel ke Excel (CSV)
+    // FUNGSI BARU: Filter Tabel Berdasarkan Tanggal & Plant
+    function filterTable() {
+        var startDateInput = document.getElementById("startDate").value;
+        var endDateInput = document.getElementById("endDate").value;
+        var plantFilter = document.getElementById("plantFilter").value;
+        
+        var table = document.getElementById("planningTable");
+        var trs = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+        
+        // Konversi input ke objek Date JavaScript
+        var start = startDateInput ? new Date(startDateInput) : null;
+        var end = endDateInput ? new Date(endDateInput) : null;
+        
+        // Memastikan batas hari (jam 23:59:59) untuk endDate
+        if (end) end.setHours(23, 59, 59, 999);
+
+        var visibleCount = 0;
+
+        for (var i = 0; i < trs.length; i++) {
+            var row = trs[i];
+            
+            // Lewati baris "no data" agar tidak dihitung dalam proses filter
+            if (row.id === "noDataRow") continue; 
+
+            var rowDateStr = row.getAttribute("data-date");
+            var rowPlant = row.getAttribute("data-plant");
+            
+            var rowDate = new Date(rowDateStr);
+            var showRow = true;
+
+            // 1. Cek Tanggal
+            if (start && rowDate < start) { showRow = false; }
+            if (end && rowDate > end) { showRow = false; }
+            
+            // 2. Cek Plant
+            if (plantFilter !== "Semua" && plantFilter !== rowPlant) { showRow = false; }
+
+            // Terapkan aksi sembunyikan/tampilkan
+            if (showRow) {
+                row.style.display = "";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+        }
+
+        // Tampilkan pesan jika data kosong
+        var noDataRow = document.getElementById("noDataRow");
+        if (visibleCount === 0) {
+            noDataRow.classList.remove("hidden");
+        } else {
+            noDataRow.classList.add("hidden");
+        }
+    }
+
+    // FUNGSI DIPERBARUI: Download CSV Hanya Data yang Tampil Saja
     function downloadCSV() {
         var table = document.getElementById("planningTable");
         var rows = table.querySelectorAll("tr");
         var csvData = [];
 
         for (var i = 0; i < rows.length; i++) {
-            var row = [];
-            var cols = rows[i].querySelectorAll("td, th");
-            
-            for (var j = 0; j < cols.length; j++) {
-                var data = cols[j].innerText.replace(/"/g, '""');
-                row.push('"' + data + '"');
+            // Abaikan baris pesan 'Data tidak ditemukan'
+            if (rows[i].id === "noDataRow") continue;
+
+            // HANYA ekstrak jika baris tersebut terlihat (tidak disembunyikan oleh filter)
+            if (rows[i].style.display !== 'none') {
+                var row = [];
+                var cols = rows[i].querySelectorAll("td, th");
+                
+                for (var j = 0; j < cols.length; j++) {
+                    var data = cols[j].innerText.replace(/"/g, '""');
+                    row.push('"' + data + '"');
+                }
+                csvData.push(row.join(",")); 
             }
-            csvData.push(row.join(",")); 
         }
 
         var csvString = csvData.join("\n");
@@ -451,7 +575,7 @@
         var url = URL.createObjectURL(blob);
         
         link.setAttribute("href", url);
-        link.setAttribute("download", "Data_Planning_Produksi.csv"); 
+        link.setAttribute("download", "Data_Planning_Produksi_Filtered.csv"); 
         link.style.visibility = 'hidden';
         
         document.body.appendChild(link);
