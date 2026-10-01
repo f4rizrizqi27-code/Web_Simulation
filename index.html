@@ -211,7 +211,7 @@
             </tr>
             <tr>
                 <td>DN001</td>
-                <td>FINISH</td> <!-- Bagian yang sebelumnya terpotong -->
+                <td>FINISH</td>
             </tr>
             <tr>
                 <td>DN002</td>
@@ -254,9 +254,43 @@
         document.getElementById(pageId).classList.remove("hidden");
     }
 
-    // Fungsi Notifikasi Download
+    // Fungsi Download Tabel ke Excel (CSV)
     function downloadCSV() {
-        alert("File sedang didownload (Simulasi)");
+        var table = document.getElementById("planningTable");
+        var rows = table.querySelectorAll("tr");
+        var csvData = [];
+
+        // Looping setiap baris tabel
+        for (var i = 0; i < rows.length; i++) {
+            var row = [];
+            var cols = rows[i].querySelectorAll("td, th");
+            
+            // Looping setiap kolom pada baris
+            for (var j = 0; j < cols.length; j++) {
+                // Mengambil teks dan membersihkan tanda kutip jika ada
+                var data = cols[j].innerText.replace(/"/g, '""');
+                row.push('"' + data + '"');
+            }
+            csvData.push(row.join(",")); // Gabungkan kolom dengan koma
+        }
+
+        // Gabungkan seluruh baris dengan enter (new line)
+        var csvString = csvData.join("\n");
+        
+        // Membuat blob untuk file CSV
+        var blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+        
+        // Membuat elemen link tersembunyi untuk proses download
+        var link = document.createElement("a");
+        var url = URL.createObjectURL(blob);
+        
+        link.setAttribute("href", url);
+        link.setAttribute("download", "Data_Planning_Produksi.csv"); // Nama file yang akan diunduh
+        link.style.visibility = 'hidden';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
     // Fungsi Notifikasi Upload
