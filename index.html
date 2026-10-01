@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dummy Portal Exacto</title>
+<title>Exacto Simulation Portal</title>
 <style>
     /* Variabel Warna Tema */
     :root {
-        --primary-color: #1f4e79; /* Biru Korporat */
-        --secondary-color: #e3000f; /* Merah AHM */
+        --primary-color: #1f4e79; 
+        --secondary-color: #e3000f; 
         --bg-color: #f4f7f6;
         --text-color: #333;
     }
@@ -24,15 +24,16 @@
     header {
         background: linear-gradient(135deg, var(--primary-color), #2a69a4);
         color: white;
-        padding: 25px 20px;
+        padding: 30px 20px;
         text-align: center;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     header h1 {
         margin: 0 0 10px 0;
-        font-size: 28px;
-        letter-spacing: 1px;
+        font-size: 32px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
     }
 
     header p {
@@ -284,7 +285,6 @@
         <div class="filter-container">
             <div>
                 <label>Tanggal Awal:</label>
-                <!-- type="date" untuk memunculkan kalender -->
                 <input id="startDate" type="date" value="2026-09-01">
             </div>
             <div>
@@ -315,7 +315,6 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- data-date digunakan agar program mudah membaca tanggal saat memfilter -->
                 <tr data-date="2026-09-01" data-plant="4">
                     <td>DN001</td><td>01/09/2026</td><td>4</td><td>Supplier A</td><td>Brake Pad</td><td>100</td>
                 </tr>
@@ -361,7 +360,6 @@
                 <tr data-date="2026-10-20" data-plant="6">
                     <td>DN015</td><td>20/10/2026</td><td>6</td><td>Supplier C</td><td>Shock Absorber</td><td>70</td>
                 </tr>
-                <!-- Pesan jika data tidak ditemukan (awalnya disembunyikan) -->
                 <tr id="noDataRow" class="hidden empty-row">
                     <td colspan="6">⚠ Data tidak ditemukan untuk filter tersebut.</td>
                 </tr>
@@ -391,40 +389,45 @@
             <div>
                 <label>Status DN:</label>
                 <select id="deliveryStatus">
-                    <option>Semua Status</option>
-                    <option>Created</option>
-                    <option>XML Out</option>
-                    <option>Printed</option>
+                    <option value="Semua">Semua Status</option>
+                    <option value="Created">Created</option>
+                    <option value="XML Out">XML Out</option>
+                    <option value="Printed">Printed</option>
                 </select>
             </div>
-            <button id="btnMonitoringSearch">SEARCH</button>
+            <button id="btnMonitoringSearch" onclick="filterMonitoring()">SEARCH</button>
         </div>
 
-        <table>
-            <tr>
-                <th>DN</th>
-                <th>Plant</th>
-                <th>Status DN</th>
-                <th>Status Transaksi</th>
-            </tr>
-            <tr>
-                <td>DN001</td>
-                <td>4</td>
-                <td>Created</td>
-                <td>Belum Transaksi</td>
-            </tr>
-            <tr>
-                <td>DN002</td>
-                <td>5</td>
-                <td>XML Out</td>
-                <td>Sudah Transaksi</td>
-            </tr>
-            <tr>
-                <td>DN003</td>
-                <td>6</td>
-                <td>Printed</td>
-                <td>Belum Transaksi</td>
-            </tr>
+        <table id="monitoringTable">
+            <thead>
+                <tr>
+                    <th>DN</th>
+                    <th>Plant</th>
+                    <th>Status DN</th>
+                    <th>Status Transaksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data diperbanyak agar sinkron dengan jumlah DN Produksi -->
+                <tr><td>DN001</td><td>4</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN002</td><td>5</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
+                <tr><td>DN003</td><td>6</td><td>Printed</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN004</td><td>4</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN005</td><td>5</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
+                <tr><td>DN006</td><td>6</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN007</td><td>4</td><td>Printed</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN008</td><td>5</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN009</td><td>6</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
+                <tr><td>DN010</td><td>4</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN011</td><td>5</td><td>Printed</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN012</td><td>6</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
+                <tr><td>DN013</td><td>4</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN014</td><td>5</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
+                <tr><td>DN015</td><td>6</td><td>Printed</td><td>Belum Transaksi</td></tr>
+                <tr id="noDataMonitoring" class="hidden empty-row">
+                    <td colspan="4">⚠ Tidak ada Delivery Note dengan status tersebut.</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
@@ -432,23 +435,18 @@
     <div id="actual" class="hidden">
         <h2>Incoming Actual</h2>
         <p style="color: #666;">Data pemantauan kedatangan aktual di gudang.</p>
-        <table>
-            <tr>
-                <th>Delivery Note</th>
-                <th>Status</th>
-            </tr>
-            <tr>
-                <td>DN001</td>
-                <td><span style="color: green; font-weight: bold;">FINISH</span></td>
-            </tr>
-            <tr>
-                <td>DN002</td>
-                <td><span style="color: orange; font-weight: bold;">ON PROGRESS</span></td>
-            </tr>
-            <tr>
-                <td>DN003</td>
-                <td><span style="color: red; font-weight: bold;">PENDING</span></td>
-            </tr>
+        
+        <!-- Tabel ini dibiarkan kosong karena akan diisi otomatis oleh JavaScript (sinkronisasi) -->
+        <table id="actualTable">
+            <thead>
+                <tr>
+                    <th>Delivery Note</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Row data disisipkan lewat JS -->
+            </tbody>
         </table>
     </div>
 
@@ -456,7 +454,68 @@
 
 <!-- JAVASCRIPT UNTUK SIMULASI FUNGSI -->
 <script>
-    // Fungsi Validasi Login
+    // ----------------------------------------------------
+    // GLOBAL STATE: Menyimpan Status Tiap Delivery Note (DN)
+    // ----------------------------------------------------
+    var dnStatusList = {};
+
+    // Inisialisasi Data Aktual saat halaman dimuat
+    function initActualData() {
+        var planningTable = document.getElementById("planningTable");
+        var rows = planningTable.querySelectorAll("tbody tr:not(#noDataRow)");
+        
+        // Atur semua DN menjadi PENDING secara default
+        rows.forEach(function(row) {
+            var dn = row.cells[0].innerText.trim();
+            dnStatusList[dn] = "PENDING";
+        });
+        
+        // Render tabel Incoming Actual
+        renderActualTable();
+    }
+
+    // Fungsi menggambar ulang tabel Incoming Actual berdasarkan State
+    function renderActualTable() {
+        var tbody = document.querySelector("#actualTable tbody");
+        tbody.innerHTML = ""; // Bersihkan tabel lama
+
+        for (var dn in dnStatusList) {
+            var status = dnStatusList[dn];
+            var tr = document.createElement("tr");
+
+            var tdDN = document.createElement("td");
+            tdDN.innerText = dn;
+
+            var tdStatus = document.createElement("td");
+            var span = document.createElement("span");
+            span.style.fontWeight = "bold";
+            span.innerText = status;
+
+            // Beri warna sesuai status
+            if (status === "FINISH") {
+                span.style.color = "green";
+            } else if (status === "ON PROGRESS") {
+                span.style.color = "orange";
+            } else {
+                span.style.color = "red";
+            }
+
+            tdStatus.appendChild(span);
+            tr.appendChild(tdDN);
+            tr.appendChild(tdStatus);
+            tbody.appendChild(tr);
+        }
+    }
+
+    // Jalankan inisialisasi saat pertama kali web di-load
+    window.onload = function() {
+        initActualData();
+    };
+
+
+    // ----------------------------------------------------
+    // FUNGSI UMUM (LOGIN & PINDAH MENU)
+    // ----------------------------------------------------
     function checkLogin() {
         var user = document.getElementById("username").value;
         var pass = document.getElementById("password").value;
@@ -475,7 +534,6 @@
         }
     }
 
-    // Fungsi Pindah Menu
     function showPage(pageId, element) {
         document.getElementById("planning").classList.add("hidden");
         document.getElementById("upload").classList.add("hidden");
@@ -491,7 +549,10 @@
         element.classList.add("active");
     }
 
-    // FUNGSI BARU: Filter Tabel Berdasarkan Tanggal & Plant
+
+    // ----------------------------------------------------
+    // FUNGSI TAB: PLANNING PRODUKSI
+    // ----------------------------------------------------
     function filterTable() {
         var startDateInput = document.getElementById("startDate").value;
         var endDateInput = document.getElementById("endDate").value;
@@ -500,19 +561,14 @@
         var table = document.getElementById("planningTable");
         var trs = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
         
-        // Konversi input ke objek Date JavaScript
         var start = startDateInput ? new Date(startDateInput) : null;
         var end = endDateInput ? new Date(endDateInput) : null;
-        
-        // Memastikan batas hari (jam 23:59:59) untuk endDate
         if (end) end.setHours(23, 59, 59, 999);
 
         var visibleCount = 0;
 
         for (var i = 0; i < trs.length; i++) {
             var row = trs[i];
-            
-            // Lewati baris "no data" agar tidak dihitung dalam proses filter
             if (row.id === "noDataRow") continue; 
 
             var rowDateStr = row.getAttribute("data-date");
@@ -521,14 +577,10 @@
             var rowDate = new Date(rowDateStr);
             var showRow = true;
 
-            // 1. Cek Tanggal
             if (start && rowDate < start) { showRow = false; }
             if (end && rowDate > end) { showRow = false; }
-            
-            // 2. Cek Plant
             if (plantFilter !== "Semua" && plantFilter !== rowPlant) { showRow = false; }
 
-            // Terapkan aksi sembunyikan/tampilkan
             if (showRow) {
                 row.style.display = "";
                 visibleCount++;
@@ -537,7 +589,6 @@
             }
         }
 
-        // Tampilkan pesan jika data kosong
         var noDataRow = document.getElementById("noDataRow");
         if (visibleCount === 0) {
             noDataRow.classList.remove("hidden");
@@ -546,17 +597,15 @@
         }
     }
 
-    // FUNGSI DIPERBARUI: Download CSV Hanya Data yang Tampil Saja
     function downloadCSV() {
         var table = document.getElementById("planningTable");
         var rows = table.querySelectorAll("tr");
         var csvData = [];
 
         for (var i = 0; i < rows.length; i++) {
-            // Abaikan baris pesan 'Data tidak ditemukan'
             if (rows[i].id === "noDataRow") continue;
 
-            // HANYA ekstrak jika baris tersebut terlihat (tidak disembunyikan oleh filter)
+            // Jika barisnya tampil (artinya ikut terdownload)
             if (rows[i].style.display !== 'none') {
                 var row = [];
                 var cols = rows[i].querySelectorAll("td, th");
@@ -566,16 +615,28 @@
                     row.push('"' + data + '"');
                 }
                 csvData.push(row.join(",")); 
+                
+                // UBAH STATUS KE "ON PROGRESS" (jika sebelumnya PENDING)
+                if (i > 0) { // Lewati baris header
+                    var dn = cols[0].innerText.trim();
+                    if (dnStatusList[dn] === "PENDING") {
+                        dnStatusList[dn] = "ON PROGRESS";
+                    }
+                }
             }
         }
 
+        // Render ulang tabel aktual agar warnanya update
+        renderActualTable();
+
+        // Proses Download
         var csvString = csvData.join("\n");
         var blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
         var link = document.createElement("a");
         var url = URL.createObjectURL(blob);
         
         link.setAttribute("href", url);
-        link.setAttribute("download", "Data_Planning_Produksi_Filtered.csv"); 
+        link.setAttribute("download", "Data_Planning_Produksi.csv"); 
         link.style.visibility = 'hidden';
         
         document.body.appendChild(link);
@@ -583,16 +644,65 @@
         document.body.removeChild(link);
     }
 
-    // Fungsi Notifikasi Upload
+
+    // ----------------------------------------------------
+    // FUNGSI TAB: UPLOAD DATA
+    // ----------------------------------------------------
     function uploadData() {
         var file = document.getElementById("uploadFile").value;
         var msg = document.getElementById("uploadMessage");
+        
         if (file !== "") {
             msg.innerText = "✔ Data berhasil diunggah.";
             msg.style.color = "green";
+            
+            // UBAH STATUS "ON PROGRESS" MENJADI "FINISH"
+            for (var dn in dnStatusList) {
+                if (dnStatusList[dn] === "ON PROGRESS") {
+                    dnStatusList[dn] = "FINISH";
+                }
+            }
+            
+            // Render ulang tabel aktual agar warnanya update
+            renderActualTable();
+
         } else {
             msg.innerText = "⚠ Pilih file terlebih dahulu!";
             msg.style.color = "#e3000f";
+        }
+    }
+
+
+    // ----------------------------------------------------
+    // FUNGSI TAB: MONITORING DELIVERY (FILTER BARU)
+    // ----------------------------------------------------
+    function filterMonitoring() {
+        var statusFilter = document.getElementById("deliveryStatus").value;
+        var table = document.getElementById("monitoringTable");
+        var trs = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+        
+        var visibleCount = 0;
+
+        for (var i = 0; i < trs.length; i++) {
+            var row = trs[i];
+            if (row.id === "noDataMonitoring") continue; 
+
+            // Kolom Status DN ada di index ke-2
+            var rowStatus = row.cells[2].innerText.trim();
+
+            if (statusFilter === "Semua" || rowStatus === statusFilter) {
+                row.style.display = "";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+        }
+
+        var noDataRow = document.getElementById("noDataMonitoring");
+        if (visibleCount === 0) {
+            noDataRow.classList.remove("hidden");
+        } else {
+            noDataRow.classList.add("hidden");
         }
     }
 </script>
