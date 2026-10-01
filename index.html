@@ -1,23 +1,512 @@
-<script>
+<!DOCTYPE html>
+<html>
 
-function checkLogin(){
+<head>
 
-var username = document.getElementById("username").value;
-var password = document.getElementById("password").value;
+<title>Dummy Portal AHM Exacto</title>
 
+<style>
 
-if(username === "admin" && password === "12345"){
-
-alert("Login Berhasil");
-
+body{
+font-family:Arial;
+background:#f2f5f9;
+margin:0;
 }
 
-else{
 
-alert("Login Gagal");
-
+header{
+background:#1f4e79;
+color:white;
+padding:20px;
+text-align:center;
 }
 
+
+.box{
+background:white;
+width:90%;
+margin:20px auto;
+padding:20px;
+border-radius:10px;
 }
 
-</script>
+
+input,button,select{
+padding:8px;
+margin:5px;
+}
+
+
+button{
+background:#1f4e79;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+
+button:hover{
+background:#163957;
+}
+
+
+table{
+border-collapse:collapse;
+width:100%;
+margin-top:20px;
+}
+
+
+th,td{
+border:1px solid #aaa;
+padding:8px;
+}
+
+
+th{
+background:#dbeaf7;
+}
+
+
+.hidden{
+display:none;
+}
+
+
+.menu a{
+margin:10px;
+color:#1f4e79;
+font-weight:bold;
+cursor:pointer;
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>DUMMY PORTAL AHM</h1>
+
+<p>Incoming Monitoring System Simulation</p>
+
+</header>
+
+
+
+
+
+<!-- LOGIN -->
+
+<div class="box" id="loginPage">
+
+
+<h2>Portal AHM Login</h2>
+
+
+<label>Username</label><br>
+
+<input 
+id="username"
+placeholder="Username">
+
+
+<br>
+
+
+<label>Password</label><br>
+
+<input 
+id="password"
+type="password"
+placeholder="Password">
+
+
+<br>
+
+
+<button 
+id="btnLogin"
+onclick="checkLogin()">
+
+LOGIN
+
+</button>
+
+
+<p id="message"></p>
+
+
+</div>
+
+
+
+
+
+
+<!-- DASHBOARD -->
+
+<div class="box hidden" id="application">
+
+
+<div class="menu">
+
+<a id="linkPlanning" onclick="showPage('planning')">
+Planning Produksi
+</a>
+
+
+<a id="linkUpload" onclick="showPage('upload')">
+Planning Incoming Upload
+</a>
+
+
+<a id="linkMonitoring" onclick="showPage('monitoring')">
+Monitoring Delivery
+</a>
+
+
+<a id="linkActual" onclick="showPage('actual')">
+Incoming Actual
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- PLANNING -->
+
+<div id="planning">
+
+
+<h2>Planning Produksi AHM</h2>
+
+
+Tanggal Awal
+
+<input 
+id="startDate"
+value="01/09/2026">
+
+
+Tanggal Akhir
+
+<input 
+id="endDate"
+value="07/10/2026">
+
+
+<br>
+
+
+Plant
+
+<select id="plant">
+
+<option>Plant 4</option>
+
+<option>Plant 5</option>
+
+<option>Plant 6</option>
+
+
+</select>
+
+
+<button id="btnSearch">
+
+SEARCH
+
+</button>
+
+
+
+
+
+<table id="planningTable">
+
+
+<tr>
+
+<th>Delivery Note</th>
+
+<th>Tanggal</th>
+
+<th>Plant</th>
+
+<th>Supplier</th>
+
+<th>Part</th>
+
+<th>Qty</th>
+
+</tr>
+
+
+
+<tr>
+
+<td>DN001</td>
+
+<td>01/09/26</td>
+
+<td>4</td>
+
+<td>Supplier A</td>
+
+<td>Brake Pad</td>
+
+<td>100</td>
+
+
+</tr>
+
+
+
+<tr>
+
+<td>DN002</td>
+
+<td>05/09/26</td>
+
+<td>5</td>
+
+<td>Supplier B</td>
+
+<td>Oil Filter</td>
+
+<td>80</td>
+
+
+</tr>
+
+
+
+<tr>
+
+<td>DN003</td>
+
+<td>10/09/26</td>
+
+<td>6</td>
+
+<td>Supplier C</td>
+
+<td>Shock Absorber</td>
+
+<td>60</td>
+
+
+</tr>
+
+
+
+</table>
+
+
+<br>
+
+
+<button 
+id="btnDownload"
+onclick="downloadCSV()">
+
+DOWNLOAD DATA
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- UPLOAD EXACTO -->
+
+<div id="upload" class="hidden">
+
+
+<h2>Internal Selog Exacto</h2>
+
+
+<h3>Planning Incoming Upload</h3>
+
+
+<input 
+id="uploadFile"
+type="file">
+
+
+<br>
+
+
+<button 
+id="btnUpload"
+onclick="uploadData()">
+
+UPLOAD
+
+</button>
+
+
+<p id="uploadMessage"></p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- MONITORING -->
+
+<div id="monitoring" class="hidden">
+
+
+<h2>
+Monitoring Online Delivery Portal
+</h2>
+
+
+Status Delivery Note
+
+
+<select id="deliveryStatus">
+
+<option>Created</option>
+
+<option>XML Out</option>
+
+<option>Printed</option>
+
+
+</select>
+
+
+
+<button id="btnMonitoringSearch">
+
+SEARCH
+
+</button>
+
+
+
+
+
+<table>
+
+
+<tr>
+
+<th>DN</th>
+
+<th>Plant</th>
+
+<th>Status DN</th>
+
+<th>Status Transaksi</th>
+
+
+</tr>
+
+
+<tr>
+
+<td>DN001</td>
+
+<td>4</td>
+
+<td>Created</td>
+
+<td>Belum Transaksi</td>
+
+
+</tr>
+
+
+<tr>
+
+<td>DN002</td>
+
+<td>5</td>
+
+<td>XML Out</td>
+
+<td>Sudah Transaksi</td>
+
+
+</tr>
+
+
+
+<tr>
+
+<td>DN003</td>
+
+<td>6</td>
+
+<td>Printed</td>
+
+<td>Belum Transaksi</td>
+
+
+</tr>
+
+
+</table>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ACTUAL -->
+
+<div id="actual" class="hidden">
+
+
+<h2>Incoming Actual</h2>
+
+
+<table>
+
+
+<tr>
+
+<th>Delivery Note</th>
+
+<th>Status</th>
+
+
+</tr>
+
+
+
+<tr>
+
+<td>DN001</td>
+
+<td>FIN
