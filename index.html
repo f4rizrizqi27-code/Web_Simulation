@@ -285,10 +285,12 @@
         <div class="filter-container">
             <div>
                 <label>Tanggal Awal:</label>
+                <!-- Atribut pembatasan ketik telah dihapus agar dapat dibaca/diisi RPA -->
                 <input id="startDate" type="date" value="2026-09-01">
             </div>
             <div>
                 <label>Tanggal Akhir:</label>
+                <!-- Atribut pembatasan ketik telah dihapus agar dapat dibaca/diisi RPA -->
                 <input id="endDate" type="date" value="2026-10-31">
             </div>
             <div>
@@ -408,7 +410,6 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Data diperbanyak agar sinkron dengan jumlah DN Produksi -->
                 <tr><td>DN001</td><td>4</td><td>Created</td><td>Belum Transaksi</td></tr>
                 <tr><td>DN002</td><td>5</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
                 <tr><td>DN003</td><td>6</td><td>Printed</td><td>Belum Transaksi</td></tr>
@@ -436,7 +437,6 @@
         <h2>Incoming Actual</h2>
         <p style="color: #666;">Data pemantauan kedatangan aktual di gudang.</p>
         
-        <!-- Tabel ini dibiarkan kosong karena akan diisi otomatis oleh JavaScript (sinkronisasi) -->
         <table id="actualTable">
             <thead>
                 <tr>
@@ -459,25 +459,21 @@
     // ----------------------------------------------------
     var dnStatusList = {};
 
-    // Inisialisasi Data Aktual saat halaman dimuat
     function initActualData() {
         var planningTable = document.getElementById("planningTable");
         var rows = planningTable.querySelectorAll("tbody tr:not(#noDataRow)");
         
-        // Atur semua DN menjadi PENDING secara default
         rows.forEach(function(row) {
             var dn = row.cells[0].innerText.trim();
             dnStatusList[dn] = "PENDING";
         });
         
-        // Render tabel Incoming Actual
         renderActualTable();
     }
 
-    // Fungsi menggambar ulang tabel Incoming Actual berdasarkan State
     function renderActualTable() {
         var tbody = document.querySelector("#actualTable tbody");
-        tbody.innerHTML = ""; // Bersihkan tabel lama
+        tbody.innerHTML = ""; 
 
         for (var dn in dnStatusList) {
             var status = dnStatusList[dn];
@@ -491,7 +487,6 @@
             span.style.fontWeight = "bold";
             span.innerText = status;
 
-            // Beri warna sesuai status
             if (status === "FINISH") {
                 span.style.color = "green";
             } else if (status === "ON PROGRESS") {
@@ -507,11 +502,9 @@
         }
     }
 
-    // Jalankan inisialisasi saat pertama kali web di-load
     window.onload = function() {
         initActualData();
     };
-
 
     // ----------------------------------------------------
     // FUNGSI UMUM (LOGIN & PINDAH MENU)
@@ -548,7 +541,6 @@
         document.getElementById(pageId).classList.remove("hidden");
         element.classList.add("active");
     }
-
 
     // ----------------------------------------------------
     // FUNGSI TAB: PLANNING PRODUKSI
@@ -605,7 +597,6 @@
         for (var i = 0; i < rows.length; i++) {
             if (rows[i].id === "noDataRow") continue;
 
-            // Jika barisnya tampil (artinya ikut terdownload)
             if (rows[i].style.display !== 'none') {
                 var row = [];
                 var cols = rows[i].querySelectorAll("td, th");
@@ -616,8 +607,7 @@
                 }
                 csvData.push(row.join(",")); 
                 
-                // UBAH STATUS KE "ON PROGRESS" (jika sebelumnya PENDING)
-                if (i > 0) { // Lewati baris header
+                if (i > 0) { 
                     var dn = cols[0].innerText.trim();
                     if (dnStatusList[dn] === "PENDING") {
                         dnStatusList[dn] = "ON PROGRESS";
@@ -626,10 +616,8 @@
             }
         }
 
-        // Render ulang tabel aktual agar warnanya update
         renderActualTable();
 
-        // Proses Download
         var csvString = csvData.join("\n");
         var blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
         var link = document.createElement("a");
@@ -644,7 +632,6 @@
         document.body.removeChild(link);
     }
 
-
     // ----------------------------------------------------
     // FUNGSI TAB: UPLOAD DATA
     // ----------------------------------------------------
@@ -656,14 +643,12 @@
             msg.innerText = "✔ Data berhasil diunggah.";
             msg.style.color = "green";
             
-            // UBAH STATUS "ON PROGRESS" MENJADI "FINISH"
             for (var dn in dnStatusList) {
                 if (dnStatusList[dn] === "ON PROGRESS") {
                     dnStatusList[dn] = "FINISH";
                 }
             }
             
-            // Render ulang tabel aktual agar warnanya update
             renderActualTable();
 
         } else {
@@ -672,9 +657,8 @@
         }
     }
 
-
     // ----------------------------------------------------
-    // FUNGSI TAB: MONITORING DELIVERY (FILTER BARU)
+    // FUNGSI TAB: MONITORING DELIVERY 
     // ----------------------------------------------------
     function filterMonitoring() {
         var statusFilter = document.getElementById("deliveryStatus").value;
@@ -687,7 +671,6 @@
             var row = trs[i];
             if (row.id === "noDataMonitoring") continue; 
 
-            // Kolom Status DN ada di index ke-2
             var rowStatus = row.cells[2].innerText.trim();
 
             if (statusFilter === "Semua" || rowStatus === statusFilter) {
