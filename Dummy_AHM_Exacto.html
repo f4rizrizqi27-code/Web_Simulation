@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dummy Portal AHM Exacto</title>
+<style>
+body{font-family:Arial;background:#f2f5f9;margin:0}
+header{background:#1f4e79;color:white;padding:20px;text-align:center}
+.box{background:white;width:90%;margin:20px auto;padding:20px;border-radius:10px}
+input,button,select{padding:8px;margin:5px}
+button{background:#1f4e79;color:white;border:0}
+table{border-collapse:collapse;width:100%;margin-top:20px}
+td,th{border:1px solid #aaa;padding:8px}
+th{background:#dbeaf7}
+.hidden{display:none}
+a{margin:10px;color:#1f4e79;font-weight:bold}
+</style>
+</head>
+<body>
+<header><h1>INTERNAL SELLOG SYSTEM</h1><p>AHM Incoming Monitoring Dummy</p></header>
+
+<div class="box" id="login">
+<h2>Login Portal AHM</h2>
+<input id="u" placeholder="Username"><br>
+<input id="p" type="password" placeholder="Password"><br>
+<button onclick="login()">LOGIN</button>
+<p id="m"></p>
+</div>
+
+<div class="box hidden" id="app">
+<a onclick="page('plan')">Planning Produksi</a>
+<a onclick="page('upload')">Planning Incoming Upload</a>
+<a onclick="page('monitor')">Monitoring Delivery</a>
+<a onclick="page('actual')">Incoming Actual</a>
+
+<div id="plan">
+<h2>Planning Produksi AHM</h2>
+Tanggal <input value="01/09/2026"> s/d <input value="07/10/2026">
+<select><option>Plant 4</option><option>Plant 5</option><option>Plant 6</option></select>
+<button>SEARCH</button>
+<table>
+<tr><th>DN</th><th>Tanggal</th><th>Plant</th><th>Supplier</th><th>Qty</th></tr>
+<tr><td>DN001</td><td>01/09/26</td><td>4</td><td>Supplier A</td><td>100</td></tr>
+<tr><td>DN002</td><td>05/09/26</td><td>5</td><td>Supplier B</td><td>80</td></tr>
+<tr><td>DN003</td><td>10/09/26</td><td>6</td><td>Supplier C</td><td>60</td></tr>
+</table>
+</div>
+
+<div id="upload" class="hidden">
+<h2>Exacto - Planning Incoming Upload</h2>
+<input type="file"><br>
+<button>UPLOAD</button>
+</div>
+
+<div id="monitor" class="hidden">
+<h2>Monitoring Online Delivery Portal</h2>
+<select><option>Created</option><option>XML Out</option><option>Printed</option></select>
+<table>
+<tr><th>DN</th><th>Status DN</th><th>Status Transaksi</th></tr>
+<tr><td>DN001</td><td>Created</td><td>Belum Transaksi</td></tr>
+<tr><td>DN002</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
+<tr><td>DN003</td><td>Printed</td><td>Belum Transaksi</td></tr>
+</table>
+</div>
+
+<div id="actual" class="hidden">
+<h2>Incoming Actual</h2>
+<p>Status : FINISH</p>
+</div>
+</div>
+
+<script>
+function login(){
+if(u.value=="admin"&&p.value=="12345"){
+login.style.display="none";app.classList.remove("hidden")
+}else{m.innerHTML="Login gagal"}
+}
+function page(x){
+plan.classList.add("hidden");upload.classList.add("hidden");monitor.classList.add("hidden");actual.classList.add("hidden");
+document.getElementById(x).classList.remove("hidden")
+}
+</script>
+</body>
+</html>
