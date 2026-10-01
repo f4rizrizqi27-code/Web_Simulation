@@ -1,69 +1,219 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dummy Portal AHM Exacto</title>
 <style>
+    /* Variabel Warna Tema */
+    :root {
+        --primary-color: #1f4e79; /* Biru Korporat */
+        --secondary-color: #e3000f; /* Merah AHM */
+        --bg-color: #f4f7f6;
+        --text-color: #333;
+    }
+
     body {
-        font-family: Arial;
-        background: #f2f5f9;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg-color);
+        color: var(--text-color);
         margin: 0;
+        -webkit-font-smoothing: antialiased;
     }
 
     header {
-        background: #1f4e79;
+        background: linear-gradient(135deg, var(--primary-color), #2a69a4);
         color: white;
-        padding: 20px;
+        padding: 25px 20px;
         text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
+    header h1 {
+        margin: 0 0 10px 0;
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
+
+    header p {
+        margin: 0;
+        font-size: 15px;
+        opacity: 0.9;
+    }
+
+    /* Styling Kotak Kontainer */
     .box {
         background: white;
         width: 90%;
-        margin: 20px auto;
-        padding: 20px;
-        border-radius: 10px;
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        transition: all 0.3s ease;
     }
 
-    input, button, select {
-        padding: 8px;
-        margin: 5px;
+    /* Khusus Halaman Login */
+    #loginPage {
+        max-width: 400px;
+        margin-top: 80px;
+        text-align: center;
     }
 
+    h2 {
+        color: var(--primary-color);
+        border-bottom: 3px solid var(--secondary-color);
+        display: inline-block;
+        padding-bottom: 8px;
+        margin-top: 0;
+    }
+
+    /* Styling Input & Form */
+    label {
+        font-weight: 600;
+        font-size: 14px;
+        color: #555;
+        display: block;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"], 
+    input[type="password"], 
+    input[type="file"], 
+    select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+        font-size: 14px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    /* Form sebaris untuk halaman planning */
+    .inline-form input, 
+    .inline-form select {
+        width: auto;
+        display: inline-block;
+        margin-right: 15px;
+        margin-bottom: 10px;
+    }
+
+    input:focus, select:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 8px rgba(31, 78, 121, 0.2);
+    }
+
+    /* Styling Tombol */
     button {
-        background: #1f4e79;
+        background: var(--primary-color);
         color: white;
         border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
         cursor: pointer;
+        transition: background 0.3s, transform 0.1s;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     button:hover {
         background: #163957;
+        transform: translateY(-2px);
     }
 
-    table {
-        border-collapse: collapse;
+    button:active {
+        transform: translateY(0);
+    }
+
+    #btnLogin {
         width: 100%;
-        margin-top: 20px;
+        font-size: 16px;
+        padding: 14px;
+        margin-top: 10px;
     }
 
-    th, td {
-        border: 1px solid #aaa;
-        padding: 8px;
+    #message, #uploadMessage {
+        margin-top: 15px;
+        font-weight: bold;
+        font-size: 14px;
     }
 
-    th {
-        background: #dbeaf7;
-    }
-
-    .hidden {
-        display: none;
+    /* Styling Menu Navigasi */
+    .menu {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 20px;
+        flex-wrap: wrap;
     }
 
     .menu a {
-        margin: 10px;
-        color: #1f4e79;
-        font-weight: bold;
+        text-decoration: none;
+        color: #555;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 30px;
         cursor: pointer;
+        transition: all 0.3s;
+        background: #e9ecef;
+    }
+
+    .menu a:hover, .menu a.active {
+        background: var(--primary-color);
+        color: white;
+        box-shadow: 0 4px 10px rgba(31, 78, 121, 0.3);
+    }
+
+    /* Styling Tabel */
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        border: 1px solid #eee;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    th {
+        background: var(--primary-color);
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f8fafd;
+    }
+
+    tr:hover td {
+        background-color: #e2eaf3;
+        transition: background 0.2s;
+    }
+
+    td:last-child, th:last-child {
+        border-right: none;
+    }
+
+    .hidden {
+        display: none !important;
     }
 </style>
 </head>
@@ -77,13 +227,14 @@
 
 <!-- LOGIN -->
 <div class="box" id="loginPage">
-    <h2>Portal AHM Login</h2>
+    <h2>Portal Login</h2>
+    <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Gunakan Username: <b>admin</b> dan Password: <b>admin123</b></p>
     
-    <label>Username</label><br>
-    <input id="username" placeholder="Username"><br>
+    <label>Username</label>
+    <input id="username" type="text" placeholder="Masukkan Username Anda">
     
-    <label>Password</label><br>
-    <input id="password" type="password" placeholder="Password"><br>
+    <label>Password</label>
+    <input id="password" type="password" placeholder="Masukkan Password Anda">
     
     <button id="btnLogin" onclick="checkLogin()">LOGIN</button>
     <p id="message"></p>
@@ -92,26 +243,32 @@
 <!-- DASHBOARD -->
 <div class="box hidden" id="application">
     <div class="menu">
-        <a id="linkPlanning" onclick="showPage('planning')">Planning Produksi</a>
-        <a id="linkUpload" onclick="showPage('upload')">Planning Incoming Upload</a>
-        <a id="linkMonitoring" onclick="showPage('monitoring')">Monitoring Delivery</a>
-        <a id="linkActual" onclick="showPage('actual')">Incoming Actual</a>
+        <a id="link-planning" class="active" onclick="showPage('planning', this)">Planning Produksi</a>
+        <a id="link-upload" onclick="showPage('upload', this)">Planning Incoming Upload</a>
+        <a id="link-monitoring" onclick="showPage('monitoring', this)">Monitoring Delivery</a>
+        <a id="link-actual" onclick="showPage('actual', this)">Incoming Actual</a>
     </div>
 
     <!-- PLANNING -->
     <div id="planning">
         <h2>Planning Produksi AHM</h2>
-        Tanggal Awal <input id="startDate" value="01/09/2026">
-        Tanggal Akhir <input id="endDate" value="07/10/2026"><br>
-        
-        Plant
-        <select id="plant">
-            <option>Plant 4</option>
-            <option>Plant 5</option>
-            <option>Plant 6</option>
-        </select>
-        
-        <button id="btnSearch">SEARCH</button>
+        <br>
+        <div class="inline-form">
+            <label style="display:inline;">Tanggal Awal:</label>
+            <input id="startDate" type="text" value="01/09/2026">
+            
+            <label style="display:inline;">Tanggal Akhir:</label>
+            <input id="endDate" type="text" value="07/10/2026">
+            
+            <label style="display:inline;">Plant:</label>
+            <select id="plant">
+                <option>Plant 4</option>
+                <option>Plant 5</option>
+                <option>Plant 6</option>
+            </select>
+            
+            <button id="btnSearch">SEARCH</button>
+        </div>
 
         <table id="planningTable">
             <tr>
@@ -146,32 +303,35 @@
                 <td>Shock Absorber</td>
                 <td>60</td>
             </tr>
-        </table><br>
+        </table>
         
-        <button id="btnDownload" onclick="downloadCSV()">DOWNLOAD DATA</button>
+        <button id="btnDownload" onclick="downloadCSV()">⬇ DOWNLOAD DATA CSV</button>
     </div>
 
     <!-- UPLOAD EXACTO -->
     <div id="upload" class="hidden">
         <h2>Internal Selog Exacto</h2>
-        <h3>Planning Incoming Upload</h3>
+        <p style="color: #666;">Upload dokumen planning incoming dari sistem internal.</p>
         
-        <input id="uploadFile" type="file"><br>
-        <button id="btnUpload" onclick="uploadData()">UPLOAD</button>
+        <input id="uploadFile" type="file">
+        <button id="btnUpload" onclick="uploadData()">⬆ UPLOAD DATA</button>
         <p id="uploadMessage"></p>
     </div>
 
     <!-- MONITORING -->
     <div id="monitoring" class="hidden">
         <h2>Monitoring Online Delivery Portal</h2>
-        Status Delivery Note
-        <select id="deliveryStatus">
-            <option>Created</option>
-            <option>XML Out</option>
-            <option>Printed</option>
-        </select>
-        
-        <button id="btnMonitoringSearch">SEARCH</button>
+        <br>
+        <div class="inline-form">
+            <label style="display:inline;">Status Delivery Note:</label>
+            <select id="deliveryStatus">
+                <option>Semua Status</option>
+                <option>Created</option>
+                <option>XML Out</option>
+                <option>Printed</option>
+            </select>
+            <button id="btnMonitoringSearch">SEARCH</button>
+        </div>
 
         <table>
             <tr>
@@ -204,6 +364,7 @@
     <!-- ACTUAL -->
     <div id="actual" class="hidden">
         <h2>Incoming Actual</h2>
+        <p style="color: #666;">Data pemantauan kedatangan aktual di gudang.</p>
         <table>
             <tr>
                 <th>Delivery Note</th>
@@ -211,15 +372,15 @@
             </tr>
             <tr>
                 <td>DN001</td>
-                <td>FINISH</td>
+                <td><span style="color: green; font-weight: bold;">FINISH</span></td>
             </tr>
             <tr>
                 <td>DN002</td>
-                <td>ON PROGRESS</td>
+                <td><span style="color: orange; font-weight: bold;">ON PROGRESS</span></td>
             </tr>
             <tr>
                 <td>DN003</td>
-                <td>PENDING</td>
+                <td><span style="color: red; font-weight: bold;">PENDING</span></td>
             </tr>
         </table>
     </div>
@@ -228,30 +389,43 @@
 
 <!-- JAVASCRIPT UNTUK SIMULASI FUNGSI -->
 <script>
-    // Fungsi Login Sederhana
+    // Fungsi Validasi Login
     function checkLogin() {
         var user = document.getElementById("username").value;
         var pass = document.getElementById("password").value;
+        var msg = document.getElementById("message");
         
-        if (user !== "" && pass !== "") {
+        // Cek validasi username & password
+        if (user === "admin" && pass === "admin123") {
             document.getElementById("loginPage").classList.add("hidden");
             document.getElementById("application").classList.remove("hidden");
+            msg.innerText = ""; // Bersihkan pesan error
+        } else if (user === "" || pass === "") {
+            msg.innerText = "⚠ Username dan Password tidak boleh kosong!";
+            msg.style.color = "#e3000f";
         } else {
-            document.getElementById("message").innerText = "Silakan masukkan Username dan Password.";
-            document.getElementById("message").style.color = "red";
+            msg.innerText = "⚠ Username atau Password salah!";
+            msg.style.color = "#e3000f";
         }
     }
 
-    // Fungsi Pindah Menu
-    function showPage(pageId) {
+    // Fungsi Pindah Menu dengan Indikator Aktif
+    function showPage(pageId, element) {
         // Sembunyikan semua halaman
         document.getElementById("planning").classList.add("hidden");
         document.getElementById("upload").classList.add("hidden");
         document.getElementById("monitoring").classList.add("hidden");
         document.getElementById("actual").classList.add("hidden");
         
-        // Tampilkan halaman yang dipilih
+        // Hapus class 'active' dari semua tombol menu
+        var links = document.querySelectorAll(".menu a");
+        links.forEach(function(link) {
+            link.classList.remove("active");
+        });
+
+        // Tampilkan halaman yang dipilih dan tambahkan class 'active' pada tombol yg diklik
         document.getElementById(pageId).classList.remove("hidden");
+        element.classList.add("active");
     }
 
     // Fungsi Download Tabel ke Excel (CSV)
@@ -260,32 +434,24 @@
         var rows = table.querySelectorAll("tr");
         var csvData = [];
 
-        // Looping setiap baris tabel
         for (var i = 0; i < rows.length; i++) {
             var row = [];
             var cols = rows[i].querySelectorAll("td, th");
             
-            // Looping setiap kolom pada baris
             for (var j = 0; j < cols.length; j++) {
-                // Mengambil teks dan membersihkan tanda kutip jika ada
                 var data = cols[j].innerText.replace(/"/g, '""');
                 row.push('"' + data + '"');
             }
-            csvData.push(row.join(",")); // Gabungkan kolom dengan koma
+            csvData.push(row.join(",")); 
         }
 
-        // Gabungkan seluruh baris dengan enter (new line)
         var csvString = csvData.join("\n");
-        
-        // Membuat blob untuk file CSV
         var blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
-        
-        // Membuat elemen link tersembunyi untuk proses download
         var link = document.createElement("a");
         var url = URL.createObjectURL(blob);
         
         link.setAttribute("href", url);
-        link.setAttribute("download", "Data_Planning_Produksi.csv"); // Nama file yang akan diunduh
+        link.setAttribute("download", "Data_Planning_Produksi.csv"); 
         link.style.visibility = 'hidden';
         
         document.body.appendChild(link);
@@ -296,12 +462,13 @@
     // Fungsi Notifikasi Upload
     function uploadData() {
         var file = document.getElementById("uploadFile").value;
+        var msg = document.getElementById("uploadMessage");
         if (file !== "") {
-            document.getElementById("uploadMessage").innerText = "Data berhasil diunggah.";
-            document.getElementById("uploadMessage").style.color = "green";
+            msg.innerText = "✔ Data berhasil diunggah.";
+            msg.style.color = "green";
         } else {
-            document.getElementById("uploadMessage").innerText = "Pilih file terlebih dahulu!";
-            document.getElementById("uploadMessage").style.color = "red";
+            msg.innerText = "⚠ Pilih file terlebih dahulu!";
+            msg.style.color = "#e3000f";
         }
     }
 </script>
