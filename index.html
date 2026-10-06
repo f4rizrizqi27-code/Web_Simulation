@@ -67,6 +67,8 @@
         display: inline-block;
         padding-bottom: 8px;
         margin-top: 0;
+        /* TAMBAHAN: Mengurangi jarak kosong di bawah judul agar lebih naik */
+        margin-bottom: 10px; 
     }
 
     /* Styling Input & Form */
@@ -100,6 +102,8 @@
         align-items: center;
         gap: 15px;
         flex-wrap: wrap;
+        /* TAMBAHAN: Memaksa kotak filter lebih rapat ke atas */
+        margin-top: 5px; 
         margin-bottom: 20px;
         background: #f8fafd;
         padding: 15px;
@@ -284,12 +288,10 @@
         <div class="filter-container">
             <div>
                 <label>Tanggal Awal:</label>
-                <!-- DIBUBAH MENJADI TYPE="TEXT" AGAR BOT RPA BISA TYPE INTO BEBAS -->
                 <input id="startDate" type="text" value="2026-09-01" placeholder="YYYY-MM-DD">
             </div>
             <div>
                 <label>Tanggal Akhir:</label>
-                <!-- DIBUBAH MENJADI TYPE="TEXT" AGAR BOT RPA BISA TYPE INTO BEBAS -->
                 <input id="endDate" type="text" value="2026-10-31" placeholder="YYYY-MM-DD">
             </div>
             <div>
@@ -568,7 +570,6 @@
             var rowDate = new Date(rowDateStr);
             var showRow = true;
 
-            // Proses Filter Tanggal Tetap Berjalan Walau Format Teks
             if (start && rowDate < start) { showRow = false; }
             if (end && rowDate > end) { showRow = false; }
             if (plantFilter !== "Semua" && plantFilter !== rowPlant) { showRow = false; }
