@@ -67,8 +67,8 @@
         display: inline-block;
         padding-bottom: 8px;
         margin-top: 0;
-        /* TAMBAHAN: Mengurangi jarak kosong di bawah judul agar lebih naik */
-        margin-bottom: 10px; 
+        /* DIBUAT SANGAT MINIM agar menempel ke atas */
+        margin-bottom: 5px; 
     }
 
     /* Styling Input & Form */
@@ -102,9 +102,10 @@
         align-items: center;
         gap: 15px;
         flex-wrap: wrap;
-        /* TAMBAHAN: Memaksa kotak filter lebih rapat ke atas */
-        margin-top: 5px; 
-        margin-bottom: 20px;
+        /* DINAIKKAN AGAR MELEKAT DENGAN JUDUL */
+        margin-top: 10px; 
+        /* DIPERLEBAR AGAR DROPDOWN PLANT JATUH DI AREA KOSONG (TIDAK KENA TABEL) */
+        margin-bottom: 40px; 
         background: #f8fafd;
         padding: 15px;
         border-radius: 8px;
@@ -198,7 +199,8 @@
         border-collapse: separate;
         border-spacing: 0;
         width: 100%;
-        margin-top: 10px;
+        /* MENDORONG TABEL SEDIKIT KE BAWAH AGAR AMAN DARI DROPDOWN */
+        margin-top: 15px; 
         margin-bottom: 20px;
         border-radius: 8px;
         overflow: hidden;
