@@ -67,8 +67,8 @@
         display: inline-block;
         padding-bottom: 8px;
         margin-top: 0;
-        /* DIBUAT SANGAT MINIM agar menempel ke atas */
-        margin-bottom: 5px; 
+        /* DIBUAT 0 AGAR BENAR-BENAR MENEMPEL KE BAWAH */
+        margin-bottom: 0px; 
     }
 
     /* Styling Input & Form */
@@ -102,10 +102,10 @@
         align-items: center;
         gap: 15px;
         flex-wrap: wrap;
-        /* DINAIKKAN AGAR MELEKAT DENGAN JUDUL */
-        margin-top: 10px; 
-        /* DIPERLEBAR AGAR DROPDOWN PLANT JATUH DI AREA KOSONG (TIDAK KENA TABEL) */
-        margin-bottom: 40px; 
+        /* DINAIKKAN MAKSIMAL AGAR MELEKAT DENGAN JUDUL */
+        margin-top: 8px; 
+        /* JARAK EKSTRA LEBAR AGAR DROPDOWN TIDAK MENYENTUH TABEL */
+        margin-bottom: 80px; 
         background: #f8fafd;
         padding: 15px;
         border-radius: 8px;
@@ -199,8 +199,8 @@
         border-collapse: separate;
         border-spacing: 0;
         width: 100%;
-        /* MENDORONG TABEL SEDIKIT KE BAWAH AGAR AMAN DARI DROPDOWN */
-        margin-top: 15px; 
+        /* MENGGESER TABEL KE BAWAH */
+        margin-top: 10px; 
         margin-bottom: 20px;
         border-radius: 8px;
         overflow: hidden;
