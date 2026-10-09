@@ -54,8 +54,8 @@
         transition: all 0.3s ease;
     }
 
-    /* Khusus Halaman Login */
-    #loginPage {
+    /* Khusus Halaman Login & Verifikasi */
+    #loginPage, #verifyPage {
         max-width: 400px;
         margin-top: 80px;
         text-align: center;
@@ -102,7 +102,6 @@
         gap: 15px;
         flex-wrap: wrap;
         margin-top: 10px; 
-        /* JARAK BAWAH DIKEMBALIKAN MENJADI NORMAL AGAR RAPAT DENGAN TABEL */
         margin-bottom: 20px; 
         background: #f8fafd;
         padding: 15px;
@@ -151,14 +150,14 @@
         transform: translateY(0);
     }
 
-    #btnLogin {
+    #btnLogin, #btnVerify {
         width: 100%;
         font-size: 16px;
         padding: 14px;
         margin-top: 10px;
     }
 
-    #message, #uploadMessage {
+    #message, #verifyMessage, #uploadMessage {
         margin-top: 15px;
         font-weight: bold;
         font-size: 14px;
@@ -197,7 +196,6 @@
         border-collapse: separate;
         border-spacing: 0;
         width: 100%;
-        /* JARAK ATAS TABEL DIHAPUS AGAR SEMAKIN RAPAT DENGAN KOTAK FILTER */
         margin-top: 0px; 
         margin-bottom: 20px;
         border-radius: 8px;
@@ -269,6 +267,18 @@
     
     <button id="btnLogin" onclick="checkLogin()">LOGIN</button>
     <p id="message"></p>
+</div>
+
+<!-- VERIFIKASI EMAIL (OTP) -->
+<div class="box hidden" id="verifyPage">
+    <h2>Verifikasi Email</h2>
+    <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Masukkan kode verifikasi yang telah dikirim ke email Anda. <br>(Simulasi Kode: <b>123456</b>)</p>
+    
+    <label>Kode Verifikasi (OTP)</label>
+    <input id="otpCode" type="text" placeholder="Masukkan 6 digit kode">
+    
+    <button id="btnVerify" onclick="checkOTP()">VERIFIKASI</button>
+    <p id="verifyMessage"></p>
 </div>
 
 <!-- DASHBOARD -->
@@ -453,11 +463,8 @@
 
 </div>
 
-<!-- JAVASCRIPT UNTUK SIMULASI FUNGSI -->
+<!-- JAVASCRIPT -->
 <script>
-    // ----------------------------------------------------
-    // GLOBAL STATE: Menyimpan Status Tiap Delivery Note (DN)
-    // ----------------------------------------------------
     var dnStatusList = {};
 
     function initActualData() {
@@ -507,9 +514,6 @@
         initActualData();
     };
 
-    // ----------------------------------------------------
-    // FUNGSI UMUM (LOGIN & PINDAH MENU)
-    // ----------------------------------------------------
     function checkLogin() {
         var user = document.getElementById("username").value;
         var pass = document.getElementById("password").value;
@@ -517,7 +521,7 @@
         
         if (user === "admin" && pass === "admin123") {
             document.getElementById("loginPage").classList.add("hidden");
-            document.getElementById("application").classList.remove("hidden");
+            document.getElementById("verifyPage").classList.remove("hidden");
             msg.innerText = ""; 
         } else if (user === "" || pass === "") {
             msg.innerText = "⚠ Username dan Password tidak boleh kosong!";
@@ -525,6 +529,23 @@
         } else {
             msg.innerText = "⚠ Username atau Password salah!";
             msg.style.color = "#e3000f";
+        }
+    }
+
+    function checkOTP() {
+        var otp = document.getElementById("otpCode").value;
+        var verifyMsg = document.getElementById("verifyMessage");
+        
+        if (otp === "123456") {
+            document.getElementById("verifyPage").classList.add("hidden");
+            document.getElementById("application").classList.remove("hidden");
+            verifyMsg.innerText = "";
+        } else if (otp === "") {
+            verifyMsg.innerText = "⚠ Masukkan kode verifikasi terlebih dahulu!";
+            verifyMsg.style.color = "#e3000f";
+        } else {
+            verifyMsg.innerText = "⚠ Kode verifikasi salah!";
+            verifyMsg.style.color = "#e3000f";
         }
     }
 
@@ -543,9 +564,6 @@
         element.classList.add("active");
     }
 
-    // ----------------------------------------------------
-    // FUNGSI TAB: PLANNING PRODUKSI
-    // ----------------------------------------------------
     function filterTable() {
         var startDateInput = document.getElementById("startDate").value;
         var endDateInput = document.getElementById("endDate").value;
@@ -633,9 +651,6 @@
         document.body.removeChild(link);
     }
 
-    // ----------------------------------------------------
-    // FUNGSI TAB: UPLOAD DATA
-    // ----------------------------------------------------
     function uploadData() {
         var file = document.getElementById("uploadFile").value;
         var msg = document.getElementById("uploadMessage");
@@ -658,9 +673,6 @@
         }
     }
 
-    // ----------------------------------------------------
-    // FUNGSI TAB: MONITORING DELIVERY 
-    // ----------------------------------------------------
     function filterMonitoring() {
         var statusFilter = document.getElementById("deliveryStatus").value;
         var table = document.getElementById("monitoringTable");
