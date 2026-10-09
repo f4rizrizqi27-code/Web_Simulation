@@ -272,7 +272,7 @@
 <!-- VERIFIKASI EMAIL (OTP) -->
 <div class="box hidden" id="verifyPage">
     <h2>Verifikasi Email</h2>
-    <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Masukkan kode verifikasi yang telah dikirim ke email Anda. <br>(Simulasi Kode: <b>123456</b>)</p>
+    <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Masukkan kode verifikasi dinamis yang telah dikirim ke sistem/email Anda.</p>
     
     <label>Kode Verifikasi (OTP)</label>
     <input id="otpCode" type="text" placeholder="Masukkan 6 digit kode">
@@ -466,6 +466,7 @@
 <!-- JAVASCRIPT -->
 <script>
     var dnStatusList = {};
+    var generatedOTP = ""; // Variabel untuk menyimpan OTP real yang digenerate otomatis
 
     function initActualData() {
         var planningTable = document.getElementById("planningTable");
@@ -520,6 +521,13 @@
         var msg = document.getElementById("message");
         
         if (user === "admin" && pass === "admin123") {
+            // Generate kode OTP real 6 digit secara acak setiap login berhasil
+            generatedOTP = Math.floor(100000 + Math.random() * 900000);
+            
+            // Tampilkan ke console / alert (atau bisa diintegrasikan dengan API email real)
+            console.log("KODE OTP REAL ANDA ADALAH: " + generatedOTP);
+            alert("Login berhasil! Kode OTP real telah digenerate (Cek console browser atau pastikan sistem mengirim email ke akun Anda). Kode: " + generatedOTP);
+
             document.getElementById("loginPage").classList.add("hidden");
             document.getElementById("verifyPage").classList.remove("hidden");
             msg.innerText = ""; 
@@ -533,14 +541,15 @@
     }
 
     function checkOTP() {
-        var otp = document.getElementById("otpCode").value;
+        var otpInput = document.getElementById("otpCode").value;
         var verifyMsg = document.getElementById("verifyMessage");
         
-        if (otp === "123456") {
+        // Validasi input dengan kode OTP dinamis yang baru saja digenerate
+        if (otpInput == generatedOTP) {
             document.getElementById("verifyPage").classList.add("hidden");
             document.getElementById("application").classList.remove("hidden");
             verifyMsg.innerText = "";
-        } else if (otp === "") {
+        } else if (otpInput === "") {
             verifyMsg.innerText = "⚠ Masukkan kode verifikasi terlebih dahulu!";
             verifyMsg.style.color = "#e3000f";
         } else {
