@@ -284,12 +284,10 @@
         <div class="filter-container">
             <div>
                 <label>Tanggal Awal:</label>
-                <!-- Placeholder dan Value diubah menjadi format dd-MMM-yyyy -->
                 <input id="startDate" type="text" value="01-Sep-2026" placeholder="dd-MMM-yyyy">
             </div>
             <div>
                 <label>Tanggal Akhir:</label>
-                <!-- Placeholder dan Value diubah menjadi format dd-MMM-yyyy -->
                 <input id="endDate" type="text" value="31-Oct-2026" placeholder="dd-MMM-yyyy">
             </div>
             <div>
@@ -316,52 +314,42 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Tampilan teks diubah menjadi format dd-MMM-yyyy -->
-                <tr data-date="2026-09-01" data-plant="4">
-                    <td>DN001</td><td>01-Sep-2026</td><td>4</td><td>Supplier A</td><td>Brake Pad</td><td>100</td>
-                </tr>
-                <tr data-date="2026-09-05" data-plant="5">
-                    <td>DN002</td><td>05-Sep-2026</td><td>5</td><td>Supplier B</td><td>Oil Filter</td><td>80</td>
-                </tr>
-                <tr data-date="2026-09-10" data-plant="6">
-                    <td>DN003</td><td>10-Sep-2026</td><td>6</td><td>Supplier C</td><td>Shock Absorber</td><td>60</td>
-                </tr>
-                <tr data-date="2026-09-12" data-plant="4">
-                    <td>DN004</td><td>12-Sep-2026</td><td>4</td><td>Supplier D</td><td>Spark Plug</td><td>200</td>
-                </tr>
-                <tr data-date="2026-09-15" data-plant="5">
-                    <td>DN005</td><td>15-Sep-2026</td><td>5</td><td>Supplier A</td><td>Brake Pad</td><td>150</td>
-                </tr>
-                <tr data-date="2026-09-18" data-plant="6">
-                    <td>DN006</td><td>18-Sep-2026</td><td>6</td><td>Supplier E</td><td>V-Belt</td><td>50</td>
-                </tr>
-                <tr data-date="2026-09-20" data-plant="4">
-                    <td>DN007</td><td>20-Sep-2026</td><td>4</td><td>Supplier F</td><td>Battery</td><td>30</td>
-                </tr>
-                <tr data-date="2026-09-25" data-plant="5">
-                    <td>DN008</td><td>25-Sep-2026</td><td>5</td><td>Supplier C</td><td>Shock Absorber</td><td>90</td>
-                </tr>
-                <tr data-date="2026-09-28" data-plant="6">
-                    <td>DN009</td><td>28-Sep-2026</td><td>6</td><td>Supplier B</td><td>Oil Filter</td><td>120</td>
-                </tr>
-                <tr data-date="2026-10-02" data-plant="4">
-                    <td>DN010</td><td>02-Oct-2026</td><td>4</td><td>Supplier D</td><td>Spark Plug</td><td>180</td>
-                </tr>
-                <tr data-date="2026-10-05" data-plant="5">
-                    <td>DN011</td><td>05-Oct-2026</td><td>5</td><td>Supplier A</td><td>Brake Pad</td><td>110</td>
-                </tr>
-                <tr data-date="2026-10-08" data-plant="6">
-                    <td>DN012</td><td>08-Oct-2026</td><td>6</td><td>Supplier E</td><td>V-Belt</td><td>65</td>
-                </tr>
-                <tr data-date="2026-10-12" data-plant="4">
-                    <td>DN013</td><td>12-Oct-2026</td><td>4</td><td>Supplier F</td><td>Battery</td><td>40</td>
-                </tr>
-                <tr data-date="2026-10-15" data-plant="5">
-                    <td>DN014</td><td>15-Oct-2026</td><td>5</td><td>Supplier B</td><td>Oil Filter</td><td>85</td>
-                </tr>
-                <tr data-date="2026-10-20" data-plant="6">
-                    <td>DN015</td><td>20-Oct-2026</td><td>6</td><td>Supplier C</td><td>Shock Absorber</td><td>70</td>
-                </tr>
+                <!-- Periode Awal Bulan -->
+                <tr data-date="2026-09-01" data-plant="4"><td>DN001</td><td>01-Sep-2026</td><td>4</td><td>Supplier A</td><td>Brake Pad</td><td>100</td></tr>
+                <tr data-date="2026-09-05" data-plant="5"><td>DN002</td><td>05-Sep-2026</td><td>5</td><td>Supplier B</td><td>Oil Filter</td><td>80</td></tr>
+                <tr data-date="2026-09-10" data-plant="6"><td>DN003</td><td>10-Sep-2026</td><td>6</td><td>Supplier C</td><td>Shock Absorber</td><td>60</td></tr>
+                <tr data-date="2026-09-12" data-plant="4"><td>DN004</td><td>12-Sep-2026</td><td>4</td><td>Supplier D</td><td>Spark Plug</td><td>200</td></tr>
+                
+                <!-- Fokus Periode: 15-Sep s/d 28-Sep (Banyak Data) -->
+                <tr data-date="2026-09-15" data-plant="5"><td>DN005</td><td>15-Sep-2026</td><td>5</td><td>Supplier A</td><td>Brake Pad</td><td>150</td></tr>
+                <tr data-date="2026-09-15" data-plant="6"><td>DN006</td><td>15-Sep-2026</td><td>6</td><td>Supplier E</td><td>V-Belt</td><td>50</td></tr>
+                <tr data-date="2026-09-16" data-plant="4"><td>DN007</td><td>16-Sep-2026</td><td>4</td><td>Supplier C</td><td>Shock Absorber</td><td>90</td></tr>
+                <tr data-date="2026-09-17" data-plant="5"><td>DN008</td><td>17-Sep-2026</td><td>5</td><td>Supplier F</td><td>Battery</td><td>40</td></tr>
+                <tr data-date="2026-09-18" data-plant="6"><td>DN009</td><td>18-Sep-2026</td><td>6</td><td>Supplier B</td><td>Oil Filter</td><td>120</td></tr>
+                <tr data-date="2026-09-18" data-plant="4"><td>DN010</td><td>18-Sep-2026</td><td>4</td><td>Supplier D</td><td>Spark Plug</td><td>180</td></tr>
+                <tr data-date="2026-09-19" data-plant="5"><td>DN011</td><td>19-Sep-2026</td><td>5</td><td>Supplier A</td><td>Brake Pad</td><td>110</td></tr>
+                <tr data-date="2026-09-20" data-plant="4"><td>DN012</td><td>20-Sep-2026</td><td>4</td><td>Supplier F</td><td>Battery</td><td>30</td></tr>
+                <tr data-date="2026-09-21" data-plant="6"><td>DN013</td><td>21-Sep-2026</td><td>6</td><td>Supplier E</td><td>V-Belt</td><td>65</td></tr>
+                <tr data-date="2026-09-21" data-plant="5"><td>DN014</td><td>21-Sep-2026</td><td>5</td><td>Supplier C</td><td>Shock Absorber</td><td>70</td></tr>
+                <tr data-date="2026-09-22" data-plant="4"><td>DN015</td><td>22-Sep-2026</td><td>4</td><td>Supplier B</td><td>Oil Filter</td><td>85</td></tr>
+                <tr data-date="2026-09-23" data-plant="6"><td>DN016</td><td>23-Sep-2026</td><td>6</td><td>Supplier D</td><td>Spark Plug</td><td>200</td></tr>
+                <tr data-date="2026-09-24" data-plant="4"><td>DN017</td><td>24-Sep-2026</td><td>4</td><td>Supplier A</td><td>Brake Pad</td><td>130</td></tr>
+                <tr data-date="2026-09-24" data-plant="5"><td>DN018</td><td>24-Sep-2026</td><td>5</td><td>Supplier F</td><td>Battery</td><td>55</td></tr>
+                <tr data-date="2026-09-25" data-plant="5"><td>DN019</td><td>25-Sep-2026</td><td>5</td><td>Supplier C</td><td>Shock Absorber</td><td>90</td></tr>
+                <tr data-date="2026-09-25" data-plant="6"><td>DN020</td><td>25-Sep-2026</td><td>6</td><td>Supplier E</td><td>V-Belt</td><td>75</td></tr>
+                <tr data-date="2026-09-26" data-plant="4"><td>DN021</td><td>26-Sep-2026</td><td>4</td><td>Supplier B</td><td>Oil Filter</td><td>105</td></tr>
+                <tr data-date="2026-09-27" data-plant="5"><td>DN022</td><td>27-Sep-2026</td><td>5</td><td>Supplier D</td><td>Spark Plug</td><td>190</td></tr>
+                <tr data-date="2026-09-28" data-plant="6"><td>DN023</td><td>28-Sep-2026</td><td>6</td><td>Supplier B</td><td>Oil Filter</td><td>120</td></tr>
+                <tr data-date="2026-09-28" data-plant="4"><td>DN024</td><td>28-Sep-2026</td><td>4</td><td>Supplier A</td><td>Brake Pad</td><td>140</td></tr>
+                
+                <!-- Periode Oktober -->
+                <tr data-date="2026-10-02" data-plant="4"><td>DN025</td><td>02-Oct-2026</td><td>4</td><td>Supplier D</td><td>Spark Plug</td><td>180</td></tr>
+                <tr data-date="2026-10-05" data-plant="5"><td>DN026</td><td>05-Oct-2026</td><td>5</td><td>Supplier A</td><td>Brake Pad</td><td>110</td></tr>
+                <tr data-date="2026-10-08" data-plant="6"><td>DN027</td><td>08-Oct-2026</td><td>6</td><td>Supplier E</td><td>V-Belt</td><td>65</td></tr>
+                <tr data-date="2026-10-12" data-plant="4"><td>DN028</td><td>12-Oct-2026</td><td>4</td><td>Supplier F</td><td>Battery</td><td>40</td></tr>
+                <tr data-date="2026-10-15" data-plant="5"><td>DN029</td><td>15-Oct-2026</td><td>5</td><td>Supplier B</td><td>Oil Filter</td><td>85</td></tr>
+                <tr data-date="2026-10-20" data-plant="6"><td>DN030</td><td>20-Oct-2026</td><td>6</td><td>Supplier C</td><td>Shock Absorber</td><td>70</td></tr>
+                
                 <tr id="noDataRow" class="hidden empty-row">
                     <td colspan="6">⚠ Data tidak ditemukan untuk filter tersebut.</td>
                 </tr>
@@ -421,10 +409,25 @@
                 <tr><td>DN009</td><td>6</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
                 <tr><td>DN010</td><td>4</td><td>Created</td><td>Belum Transaksi</td></tr>
                 <tr><td>DN011</td><td>5</td><td>Printed</td><td>Belum Transaksi</td></tr>
-                <tr><td>DN012</td><td>6</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
-                <tr><td>DN013</td><td>4</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN012</td><td>4</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN013</td><td>6</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
                 <tr><td>DN014</td><td>5</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
-                <tr><td>DN015</td><td>6</td><td>Printed</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN015</td><td>4</td><td>Printed</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN016</td><td>6</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN017</td><td>4</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN018</td><td>5</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
+                <tr><td>DN019</td><td>5</td><td>Printed</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN020</td><td>6</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN021</td><td>4</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
+                <tr><td>DN022</td><td>5</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN023</td><td>6</td><td>Printed</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN024</td><td>4</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
+                <tr><td>DN025</td><td>4</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN026</td><td>5</td><td>Printed</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN027</td><td>6</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
+                <tr><td>DN028</td><td>4</td><td>Created</td><td>Belum Transaksi</td></tr>
+                <tr><td>DN029</td><td>5</td><td>XML Out</td><td>Sudah Transaksi</td></tr>
+                <tr><td>DN030</td><td>6</td><td>Printed</td><td>Belum Transaksi</td></tr>
                 <tr id="noDataMonitoring" class="hidden empty-row">
                     <td colspan="4">⚠ Tidak ada Delivery Note dengan status tersebut.</td>
                 </tr>
@@ -445,7 +448,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Row data disisipkan lewat JS -->
+                <!-- Row data disisipkan lewat JS secara otomatis berdasarkan 30 data di Planning -->
             </tbody>
         </table>
     </div>
