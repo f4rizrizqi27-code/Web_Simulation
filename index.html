@@ -54,8 +54,8 @@
         transition: all 0.3s ease;
     }
 
-    /* Khusus Halaman Login & Verifikasi */
-    #loginPage, #verifyPage {
+    /* Khusus Halaman Login */
+    #loginPage {
         max-width: 400px;
         margin-top: 80px;
         text-align: center;
@@ -67,7 +67,6 @@
         display: inline-block;
         padding-bottom: 8px;
         margin-top: 0;
-        margin-bottom: 0px; 
     }
 
     /* Styling Input & Form */
@@ -101,8 +100,7 @@
         align-items: center;
         gap: 15px;
         flex-wrap: wrap;
-        margin-top: 10px; 
-        margin-bottom: 20px; 
+        margin-bottom: 20px;
         background: #f8fafd;
         padding: 15px;
         border-radius: 8px;
@@ -150,14 +148,14 @@
         transform: translateY(0);
     }
 
-    #btnLogin, #btnVerify {
+    #btnLogin {
         width: 100%;
         font-size: 16px;
         padding: 14px;
         margin-top: 10px;
     }
 
-    #message, #verifyMessage, #uploadMessage {
+    #message, #uploadMessage {
         margin-top: 15px;
         font-weight: bold;
         font-size: 14px;
@@ -196,7 +194,7 @@
         border-collapse: separate;
         border-spacing: 0;
         width: 100%;
-        margin-top: 0px; 
+        margin-top: 10px;
         margin-bottom: 20px;
         border-radius: 8px;
         overflow: hidden;
@@ -269,18 +267,6 @@
     <p id="message"></p>
 </div>
 
-<!-- VERIFIKASI EMAIL (OTP) -->
-<div class="box hidden" id="verifyPage">
-    <h2>Verifikasi Email</h2>
-    <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Masukkan kode verifikasi dinamis yang telah dikirim ke sistem/email Anda.</p>
-    
-    <label>Kode Verifikasi (OTP)</label>
-    <input id="otpCode" type="text" placeholder="Masukkan 6 digit kode">
-    
-    <button id="btnVerify" onclick="checkOTP()">VERIFIKASI</button>
-    <p id="verifyMessage"></p>
-</div>
-
 <!-- DASHBOARD -->
 <div class="box hidden" id="application">
     <div class="menu">
@@ -298,10 +284,12 @@
         <div class="filter-container">
             <div>
                 <label>Tanggal Awal:</label>
+                <!-- DIBUBAH MENJADI TYPE="TEXT" AGAR BOT RPA BISA TYPE INTO BEBAS -->
                 <input id="startDate" type="text" value="2026-09-01" placeholder="YYYY-MM-DD">
             </div>
             <div>
                 <label>Tanggal Akhir:</label>
+                <!-- DIBUBAH MENJADI TYPE="TEXT" AGAR BOT RPA BISA TYPE INTO BEBAS -->
                 <input id="endDate" type="text" value="2026-10-31" placeholder="YYYY-MM-DD">
             </div>
             <div>
@@ -463,10 +451,12 @@
 
 </div>
 
-<!-- JAVASCRIPT -->
+<!-- JAVASCRIPT UNTUK SIMULASI FUNGSI -->
 <script>
+    // ----------------------------------------------------
+    // GLOBAL STATE: Menyimpan Status Tiap Delivery Note (DN)
+    // ----------------------------------------------------
     var dnStatusList = {};
-    var generatedOTP = ""; // Variabel untuk menyimpan OTP real yang digenerate otomatis
 
     function initActualData() {
         var planningTable = document.getElementById("planningTable");
@@ -515,21 +505,17 @@
         initActualData();
     };
 
+    // ----------------------------------------------------
+    // FUNGSI UMUM (LOGIN & PINDAH MENU)
+    // ----------------------------------------------------
     function checkLogin() {
         var user = document.getElementById("username").value;
         var pass = document.getElementById("password").value;
         var msg = document.getElementById("message");
         
         if (user === "admin" && pass === "admin123") {
-            // Generate kode OTP real 6 digit secara acak setiap login berhasil
-            generatedOTP = Math.floor(100000 + Math.random() * 900000);
-            
-            // Tampilkan ke console / alert (atau bisa diintegrasikan dengan API email real)
-            console.log("KODE OTP REAL ANDA ADALAH: " + generatedOTP);
-            alert("Login berhasil! Kode OTP real telah digenerate (Cek console browser atau pastikan sistem mengirim email ke akun Anda). Kode: " + generatedOTP);
-
             document.getElementById("loginPage").classList.add("hidden");
-            document.getElementById("verifyPage").classList.remove("hidden");
+            document.getElementById("application").classList.remove("hidden");
             msg.innerText = ""; 
         } else if (user === "" || pass === "") {
             msg.innerText = "⚠ Username dan Password tidak boleh kosong!";
@@ -537,24 +523,6 @@
         } else {
             msg.innerText = "⚠ Username atau Password salah!";
             msg.style.color = "#e3000f";
-        }
-    }
-
-    function checkOTP() {
-        var otpInput = document.getElementById("otpCode").value;
-        var verifyMsg = document.getElementById("verifyMessage");
-        
-        // Validasi input dengan kode OTP dinamis yang baru saja digenerate
-        if (otpInput == generatedOTP) {
-            document.getElementById("verifyPage").classList.add("hidden");
-            document.getElementById("application").classList.remove("hidden");
-            verifyMsg.innerText = "";
-        } else if (otpInput === "") {
-            verifyMsg.innerText = "⚠ Masukkan kode verifikasi terlebih dahulu!";
-            verifyMsg.style.color = "#e3000f";
-        } else {
-            verifyMsg.innerText = "⚠ Kode verifikasi salah!";
-            verifyMsg.style.color = "#e3000f";
         }
     }
 
@@ -573,6 +541,9 @@
         element.classList.add("active");
     }
 
+    // ----------------------------------------------------
+    // FUNGSI TAB: PLANNING PRODUKSI
+    // ----------------------------------------------------
     function filterTable() {
         var startDateInput = document.getElementById("startDate").value;
         var endDateInput = document.getElementById("endDate").value;
@@ -597,6 +568,7 @@
             var rowDate = new Date(rowDateStr);
             var showRow = true;
 
+            // Proses Filter Tanggal Tetap Berjalan Walau Format Teks
             if (start && rowDate < start) { showRow = false; }
             if (end && rowDate > end) { showRow = false; }
             if (plantFilter !== "Semua" && plantFilter !== rowPlant) { showRow = false; }
@@ -660,6 +632,9 @@
         document.body.removeChild(link);
     }
 
+    // ----------------------------------------------------
+    // FUNGSI TAB: UPLOAD DATA
+    // ----------------------------------------------------
     function uploadData() {
         var file = document.getElementById("uploadFile").value;
         var msg = document.getElementById("uploadMessage");
@@ -682,6 +657,9 @@
         }
     }
 
+    // ----------------------------------------------------
+    // FUNGSI TAB: MONITORING DELIVERY 
+    // ----------------------------------------------------
     function filterMonitoring() {
         var statusFilter = document.getElementById("deliveryStatus").value;
         var table = document.getElementById("monitoringTable");
